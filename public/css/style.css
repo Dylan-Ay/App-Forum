@@ -1,0 +1,83 @@
+/* <---------- Generals settings ----------> */
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #f2f2f2;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.almost-bold{
+    font-weight: 600;
+}
+
+.disable{
+    filter: blur(2px);
+    cursor: not-allowed;
+}
+
+
+/* <---------- HEADER ----------> */
+@media screen and (min-width: 991.5px) {
+    .navbar-nav{
+        width: 85%;
+    }
+}
+
+/* <---------- MAIN  ----------> */
+
+/* Message */
+#detail-message{
+    background-color: white;
+}
+
+#autor-container{
+    max-width: 100%;
+    border-bottom: 0.0625rem dotted #e0e0e0 ;
+}
+
+.answer{
+    font-size: 25px;
+}
+
+/* User */
+
+.title-user img{
+    width: 140px;
+}
+
+.infos-user{
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    max-width: 800px;
+}
+
+.infos-user h4{
+    color: #ff3c00;
+    border-bottom: 1px solid #cac5c5;
+}
+
+.infos-user li{
+    padding-bottom: 10px;
+}
+
+.infos-user .info-value{
+    margin-left: 6px;
+}
+
+/* Login */
+#login input[type="submit"], #sign-up input[type="submit"]{
+    width: 140px;
+}
+
+.login-container{
+    color: white;
+    font-size: 18px;
+}
+
