@@ -39,7 +39,7 @@ $title = "Listes des utilisateurs";
                     </td>
                         
                     <td>
-                        <?= $user->getRegisterDate(); ?>
+                        <?= $user->getRegisterDate()->format("d/m/Y à H:i:s"); ?>
                     </td>
 
                     <td>

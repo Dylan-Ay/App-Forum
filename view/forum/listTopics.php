@@ -47,10 +47,9 @@
     <?php if ($session->getUser()): ?>
         <span class="answer mb-3 d-block almost-bold">Nouveau Sujet</span>
 
-        <form action="index.php?ctrl=forum&action=addTopic" method="post">
+        <form action="index.php?ctrl=forum&action=addTopic&id=<?= $category->getId() ?>" method="post">
             <input type="text" name="title" id="title" placeholder="Saisir le titre du sujet" class="mb-3 form-control">
             <textarea name="message" id="message" cols="30" rows="7" class="w-100 form-control mb-3" placeholder="Insérez votre message ici"></textarea>
-            <input type="hidden" name="id" value="<?= $category->getId(); ?>">
             <input type="submit" class="btn btn-warning" value="Créer">
         </form>
     <?php else:?>
@@ -59,7 +58,6 @@
         <form action="index.php?ctrl=forum&action=addTopic" method="post">
             <input type="text" name="title" id="title" placeholder="Saisir le titre du sujet" class="mb-3 form-control disable" disabled>
             <textarea name="message" id="message" cols="30" rows="7" class="w-100 form-control mb-3 disable" placeholder="Insérez votre message ici" disabled></textarea>
-            <input type="hidden" name="id" value="<?= $category->getId(); ?>">
 
             <div class="info-msg">
                 Merci de vous <a href="index.php?ctrl=security&action=login">connecter</a> pour créer un nouveau sujet.

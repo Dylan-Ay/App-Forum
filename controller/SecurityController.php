@@ -5,7 +5,8 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
-    use Model\Managers\UserManager;
+use Model\Managers\MessageManager;
+use Model\Managers\UserManager;
 
     class SecurityController extends AbstractController implements ControllerInterface{
 
@@ -150,12 +151,14 @@
         public function detailAccount()
         {
             $userManager = new UserManager();
+            $messageManager = new MessageManager();
             $session = new Session();
-
+  
             return [
                 "view" => VIEW_DIR."security/detailAccount.php",
                 "data" => [
                     "user" => $userManager->getUserByEmail($session->getUser()),
+                    "messages" => $messageManager->findMessagesByEmail($session->getUser()),
                     "session" => $session
                 ]
             ];

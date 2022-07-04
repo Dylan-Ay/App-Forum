@@ -6,6 +6,8 @@
 
 body{
     background-color: #f2f2f2;
+    --orange-color: #ff3c00;
+    --border-grey-color: #cac5c5;
 }
 
 .bold{
@@ -59,16 +61,36 @@ body{
 }
 
 .infos-user h4{
-    color: #ff3c00;
-    border-bottom: 1px solid #cac5c5;
+    color: var(--orange-color);
+    border-bottom: 1px solid var(--border-grey-color);
 }
-
 .infos-user li{
     padding-bottom: 10px;
 }
 
 .infos-user .info-value{
     margin-left: 6px;
+}
+
+#user-details, #last-user-messages{
+    background-color: white;
+    max-width: 800px;
+    
+}
+#user-details li{
+    line-height: 30px;
+    border-bottom: 1px solid var(--border-grey-color);
+    padding: 10px 0;
+}
+#user-details img{
+    height: 75px;
+}
+.user-data{
+    margin-right: 15px;
+}
+
+#user-details h4, #last-user-messages h4{
+    color: var(--orange-color);
 }
 
 /* Login */
@@ -78,6 +100,6 @@ body{
 
 .login-container{
     color: white;
-    font-size: 18px;
+    font-size: 17px;
 }
 

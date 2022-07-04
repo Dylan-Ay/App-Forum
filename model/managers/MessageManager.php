@@ -29,6 +29,21 @@
                 $this->className
             );
         }
-    }
 
-    
+        public function findMessagesByEmail($email)
+        {
+            $sql = 
+            "SELECT content, creationdate, u.email as email, topic_id, user_id, id_message, COUNT(id_message) as nb
+			FROM message m
+            INNER JOIN user u
+            ON u.id_user = m.user_id
+            WHERE u.email = :email
+            GROUP BY content
+            ORDER BY creationdate DESC";
+
+            return $this->getMultipleResults(
+                DAO::select($sql, ['email' => $email]), 
+                $this->className
+            );
+        }
+    }

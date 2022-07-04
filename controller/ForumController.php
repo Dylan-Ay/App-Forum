@@ -82,24 +82,20 @@
 
                         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
                         $message = filter_input(INPUT_POST, 'message', FILTER_DEFAULT);
-                        $topicId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-
-                        $sql= $topicManager->add([
-                                'title' => $title,
-                                'user_id' => $userManager->getUserByEmail($_SESSION['user'])->getId(), // Il faut récupérer l'ID du user connecté
-                                'category_id' => $topicId
-                            ]);
-                        
-                        // $topicId = $topicManager->insert($sql);
-                            
+                
+                        $topicId = $topicManager->add([
+                            'title' => $title,
+                            'user_id' => $userManager->getUserByEmail($_SESSION['user'])->getId(),
+                            'category_id' => $id
+                        ]);
+                                                 
                         $messageManager->add([
                             'content' => $message,
-                            'user_id' => $userManager->getUserByEmail($_SESSION['user'])->getId(), // Il faut récupérer l'ID du user connecté
-                            'topic_id' => 20 // Il faut récupérer le lastInsertId
+                            'user_id' => $userManager->getUserByEmail($_SESSION['user'])->getId(),
+                            'topic_id' => $topicId
                         ]);
-                        $id = 23;
 
-                        header('Location: index.php?ctrl=forum&action=detailTopic&id='.$id); // Fonction redirectTo ?
+                        $this->redirectTo("forum", "detailTopic", $topicId);
 
                         return [
                             "view" => VIEW_DIR."forum/detailTopic.php",
@@ -114,8 +110,40 @@
             }
         }
 
-        public function addMessage()
+        // Fonction pour traiter l'ajout d'un message
+        public function addMessage($id)
         {
-            // Fonction pour traiter l'ajout d'un message
+            $topicManager = new TopicManager();
+            $messageManager = new MessageManager();
+            $userManager = new UserManager();
+            $session = new Session();
+
+            if ($_SERVER['REQUEST_METHOD'] === "POST"){
+
+                if (!empty($_POST['message'])){
+
+                    if ($session->getUser()){
+                        
+                        $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                        
+                        $messageManager->add([
+                            "content" => $message,
+                            "user_id" => $userManager->getUserByEmail($_SESSION['user'])->getId(),
+                            "topic_id" => $id
+                        ]);
+
+                        $this->redirectTo("forum", "detailTopic", $id);
+
+                        return [
+                            "view" => VIEW_DIR."forum/detailTopic.php",
+                            "data" => [
+                                "topic" => $topicManager->findOneById($id),
+                                "messages" => $messageManager->findMessagesByTopic($id),
+                                "session" => $session
+                            ]
+                        ];
+                    }
+                }
+            }
         }
     }

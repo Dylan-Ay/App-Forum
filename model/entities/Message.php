@@ -112,9 +112,4 @@
 
                 return $this;
         }
-
-        // public function lastInsertId()
-        // {
-        //         return $this->lastInsertId();
-        // }
     }

@@ -32,17 +32,15 @@
 
     <?php if ($session->getUser()): ?>
         <span class="answer mb-3 d-block almost-bold">Répondre</span>
-        <form action="index.php?ctrl=security&action=addMessage" method="post">
+        <form action="index.php?ctrl=forum&action=addMessage&id=<?= $topic->getId() ?>" method="post">
             <textarea name="message" id="message" class="w-100 form-control mb-3" cols="30" rows="5" placeholder="Insérez votre message ici"></textarea>
-            <input type="hidden" name="id" value="<?= $topic->getId(); ?>">
             <input type="submit" class="btn btn-warning" value="Poster">
         </form>
 
     <?php else:?>
         <span class="answer mb-3 d-block almost-bold">Répondre</span>
-        <form action="index.php?ctrl=security&action=addMessage" method="post">
+        <form action="index.php?ctrl=forum&action=addMessage&id=<?= $topic->getId() ?>" method="post">
             <textarea name="message" id="message" class="w-100 disable form-control mb-3" cols="30" rows="5" placeholder="Insérez votre message ici" disabled></textarea>
-            <input type="hidden" name="id" value="<?= $topic->getId(); ?>">
 
             <div class="info-msg">
                 Merci de vous <a href="index.php?ctrl=security&action=login">connecter</a> pour répondre au sujet.

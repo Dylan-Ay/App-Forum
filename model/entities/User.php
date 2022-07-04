@@ -129,7 +129,7 @@
 
         public function getRegisterDate(){
 
-            $formattedDate = $this->registerdate->format("d/m/Y, H:i:s");
+            $formattedDate = $this->registerdate;
             return $formattedDate;
         }
 

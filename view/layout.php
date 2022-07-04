@@ -71,7 +71,7 @@
     <!-------- MAIN -------->
 
         <main class="container py-5">
-            <h1 class="text-center">
+            <h1 class="text-center mb-5">
                 <?php if (isset($h1)): echo $h1; endif;?>
             </h1>
 
