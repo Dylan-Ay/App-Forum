@@ -17,11 +17,13 @@
         public function listUsers()
         {
             $userManager = new UserManager();
+            $session = new Session();
 
             return [
                 "view" => VIEW_DIR."user/listUsers.php",
                 "data" => [
-                    "users" => $userManager->getUsersList()
+                    "users" => $userManager->getUsersList(),
+                    "session" => $session
                 ]
             ];
         }
@@ -30,11 +32,13 @@
         public function detailUser($id)
         {
             $userManager = new UserManager();
+            $session = new Session();
             
             return [
                 "view" => VIEW_DIR."user/detailUser.php",
                 "data" => [
-                    "user" => $userManager->getUser($id)
+                    "user" => $userManager->getUser($id),
+                    "session" => $session
                 ]
             ];
         }

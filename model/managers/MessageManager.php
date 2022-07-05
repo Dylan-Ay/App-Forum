@@ -33,13 +33,16 @@
         public function findMessagesByEmail($email)
         {
             $sql = 
-            "SELECT content, creationdate, u.email as email, topic_id, user_id, id_message, COUNT(id_message) as nb
-			FROM message m
-            INNER JOIN user u
-            ON u.id_user = m.user_id
-            WHERE u.email = :email
-            GROUP BY content
-            ORDER BY creationdate DESC";
+                "SELECT t.title, m.content, m.creationdate, m.user_id, m.topic_id, COUNT(m.id_message) as nb
+                FROM topic t
+                INNER JOIN message m
+                ON t.id_topic = m.topic_id
+                INNER JOIN user u
+                ON m.user_id = u.id_user
+                WHERE u.email = :email
+                GROUP BY m.content
+                ORDER BY m.creationdate
+            ";
 
             return $this->getMultipleResults(
                 DAO::select($sql, ['email' => $email]), 

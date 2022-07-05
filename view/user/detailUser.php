@@ -1,6 +1,7 @@
 <?php 
 
 $user = $result['data']['user'];
+$session = $result['data']['session'];
 $title = "Profil de ". $user->getNickname();
 
 ?>

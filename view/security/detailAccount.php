@@ -13,7 +13,12 @@ if ($session->getUser()){
 };
 ?>
 <section id="user-details" class="py-3 px-3 mb-5">
-    <h4>Informations détaillées</h4>
+    <div class="header-user-details d-flex justify-content-between align-items-center">
+        <h4>Informations détaillées</h4>
+        <span>
+            <a href="index.php?ctrl=security&action=modifyAccount">Modifier mon profil</a>
+        </span>
+    </div>
 
     <ul class="list-unstyled ps-4">
         <li> 
@@ -28,8 +33,11 @@ if ($session->getUser()){
         <li> 
             <span class="almost-bold user-data">Adresse email:</span>  <?= $user->getEmail()?> 
         </li>
-        <li>
-            <span class="almost-bold user-data">Mot de passe:</span> **********
+        <li class="password-content d-flex justify-content-between align-items-center">
+            <div>
+                <span class="almost-bold user-data">Mot de passe:</span> **********
+            </div> 
+            <a href="index.php?ctrl=security&action=modifyPassword">Modifier mon mot de passe</a>
         </li>
         <li>
             <span class="almost-bold user-data">Genre:</span> <?= $user->getGender() ?>
@@ -55,7 +63,7 @@ if ($session->getUser()){
     <?php if(!empty($messages)): foreach ($messages as $message):?>
 
         <div id="message-container" class="d-flex justify-content-between">
-            <a href="index.php?ctrl=forum&action=detailTopic&id=<?= $message->getTopic()?>"><?= $message->getContent() ?></a> <span class="text-end">Le <?= $message->getCreationDate();?></span> 
+            <a href="index.php?ctrl=forum&action=detailTopic&id=<?= $message->getTopic()->getId()?>"><?= $message->getContent() ?></a> <span class="text-end">Le <?= $message->getCreationDate();?></span> 
         </div>
 
         <?php endforeach; else:?>

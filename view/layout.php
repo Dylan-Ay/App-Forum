@@ -29,13 +29,15 @@
                 </div>
                 <div class="row flex-nowrap align-items-center order-lg-1">
                     <div class="col d-flex align-items-end login-container">
-                        <?php 
-                                if (isset($_SESSION['user'])){ 
-                                    echo "<a class='nav-link' href='index.php?ctrl=security&action=logout'>Se deconnecter</a>";
-                                } else{ 
-                                    echo "<a class='nav-link' href='index.php?ctrl=security&action=login'>Connexion</a>";
-                                } 
-                        ?>
+                        <?php if($session->getUser()): ?>
+                            
+                            <a class='nav-link' href='index.php?ctrl=security&action=logout'>Se deconnecter</a>
+
+                        <?php else: ?>
+
+                            <a class='nav-link' href='index.php?ctrl=security&action=login'>Connexion</a>
+                            
+                        <?php endif;?>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse navbar-dark bg-dark justify-content-center" id="navbarNav">
@@ -46,22 +48,26 @@
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?ctrl=forum&action=listCategories">Catégories</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?ctrl=user&action=listUsers">Utilisateurs</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php?ctrl=security&action=detailAccount">Mon Profil</a>
-                        </li>
-                        <li class="nav-item">
-                            <?php
-                                if (isset($_SESSION['user'])){ 
-                                    echo "";
-                                } else{ 
-                                    echo "<a class='nav-link' href='index.php?ctrl=security&action=registerForm'>S'inscrire</a>";
-                                } 
-                            ?>
-                            
-                        </li>
+                        
+                        <?php if($session->getUser()): ?>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?ctrl=security&action=detailAccount">Mon Profil</a>
+                            </li>
+
+                        <?php endif;?>
+
+                        <?php if(!$session->getUser()): ?>
+
+                            <li class="nav-item">
+                                <a class='nav-link' href='index.php?ctrl=security&action=registerForm'>S'inscrire</a>
+                            </li>
+
+                        <?php endif;?>
                     </ul>
                 </div>
             </div>

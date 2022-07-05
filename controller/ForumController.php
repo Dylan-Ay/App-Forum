@@ -21,11 +21,13 @@
         public function listCategories()
         {
             $categoryManager = new CategoryManager();
+            $session = new Session();
 
             return [
                 "view" => VIEW_DIR."forum/listCategories.php",
                 "data" => [
-                    "categories" => $categoryManager->findAll(["creationdate", "DESC"])
+                    "categories" => $categoryManager->findAll(["creationdate", "DESC"]),
+                    "session" => $session
                 ]
             ];
         }

@@ -1,6 +1,7 @@
 <?php
 
 $categories = $result["data"]['categories'];
+$session = $result['data']['session'];
 $title = "Liste des Catégories";
 ?>
 

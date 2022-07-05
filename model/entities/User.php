@@ -108,7 +108,11 @@
          */ 
         public function getRole()
         {
-                return $this->role;
+                if ($this->role === "ROLE_ADMIN"){
+                        return $this->role = "Admin";
+                }else{
+                        return $this->role = "Utilisateur";
+                }
         }
 
         /**
@@ -280,5 +284,10 @@
                 $this->password = $password;
 
                 return $this;
+        }
+
+        public function __toString()
+        {
+
         }
     }

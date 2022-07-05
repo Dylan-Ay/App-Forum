@@ -76,7 +76,7 @@
         public function getUserByEmailCheckPassword($email)
         {
             $sql = 
-            "SELECT u.email, u.password
+            "SELECT DISTINCT u.email, u.password
             FROM ".$this->tableName." u
             LEFT JOIN message m
             ON m.user_id = u.id_user

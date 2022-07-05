@@ -94,7 +94,7 @@
         }
 
         /**
-         * Get the value of closed
+         * Get the value of topic
          */ 
         public function getTopic()
         {
@@ -102,13 +102,13 @@
         }
 
         /**
-         * Set the value of closed
+         * Set the value of topic
          *
          * @return  self
          */ 
         public function setTopic($topic)
         {
-                $this->closed = $topic;
+                $this->topic = $topic;
 
                 return $this;
         }

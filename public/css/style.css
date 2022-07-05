@@ -72,7 +72,7 @@ body{
     margin-left: 6px;
 }
 
-#user-details, #last-user-messages{
+#user-details, #last-user-messages, #password-container{
     background-color: white;
     max-width: 800px;
     
@@ -97,9 +97,17 @@ body{
 #login input[type="submit"], #sign-up input[type="submit"]{
     width: 140px;
 }
+#sign-up form{
+    line-height: 30px;
+}
 
 .login-container{
     color: white;
     font-size: 17px;
+}
+
+/* Detail account */
+#modify-account{
+    line-height: 30px;
 }
 

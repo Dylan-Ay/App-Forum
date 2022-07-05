@@ -1,6 +1,7 @@
 <?php
 
 $users = $result['data']['users'];
+$session = $result['data']['session'];
 $title = "Listes des utilisateurs";
 ?>
 

@@ -43,14 +43,7 @@
                 "view" => VIEW_DIR."rules.php"
             ];
         }
-
-        public function login(){
-            
-            return [
-                "view" => VIEW_DIR."login.php"
-            ];
-        }
-
+        
         /*public function ajax(){
             $nb = $_GET['nb'];
             $nb++;

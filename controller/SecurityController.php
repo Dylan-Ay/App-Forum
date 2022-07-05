@@ -5,8 +5,8 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
-use Model\Managers\MessageManager;
-use Model\Managers\UserManager;
+    use Model\Managers\MessageManager;
+    use Model\Managers\UserManager;
 
     class SecurityController extends AbstractController implements ControllerInterface{
 
@@ -185,7 +185,6 @@ use Model\Managers\UserManager;
                     // If the email exists and the password matches to the email which both exist in the db we put in session the user email
 
                     if ($emailExists && password_verify($password, $passwordMatches->getPassword())){
-
                         
                         $session->setUser($email);
 
@@ -226,6 +225,7 @@ use Model\Managers\UserManager;
             }
         }
 
+        // Method to allows the user to logout
         public function logout()
         {
             unset($_SESSION["user"]);
@@ -241,7 +241,89 @@ use Model\Managers\UserManager;
 
         public function modifyPassword()
         {
+            $session = new Session;
+            $userManager = new UserManager;
 
+            return [
+                "view" => VIEW_DIR."security/modifyPassword.php",
+                "data" => [
+                    "user" => $userManager->getUserByEmail($session->getUser()),
+                    "session" => $session
+                ]
+            ];
+        }
+
+        public function modifyPasswordSubmit()
+        {
+            $session = new Session;
+            $userManager = new UserManager;
+
+            if ($_SERVER['REQUEST_METHOD'] === "POST"){
+
+                if (!empty($_POST['password']) && !empty($_POST['confirm-password'])){
+
+                    if ($_POST['password'] === $_POST['confirm-password']){
+                        
+                        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                        if ($password && strlen($password) >= 8){
+                            
+                        }else{
+                            
+                            $session->addFlash('password-message',
+                                '<div class="alert alert-danger text-center" role="alert">
+                                        Erreur : Le mot de passe doit au moins contenir 8 caractères.
+                                </div>' );
+                        }
+                    }else{
+                        $session->addFlash('password-message',
+                            '<div class="alert alert-danger text-center" role="alert">
+                                    Erreur : Les mots de passes ne correspondent pas.
+                            </div>' );
+                    }
+                }else{
+                    $session->addFlash('password-message',
+                        '<div class="alert alert-danger text-center" role="alert">
+                                Erreur : Veuillez remplir les deux champs.
+                        </div>' );
+                }
+            }
+
+            return [
+                "view" => VIEW_DIR."security/modifyPassword.php",
+                "data" => [
+                    "user" => $userManager->getUserByEmail($session->getUser()),
+                    "session" => $session
+                ]
+            ];
+        }
+
+        public function modifyAccount()
+        {
+            $session = new Session;
+            $userManager = new UserManager;
+
+            return [
+                "view" => VIEW_DIR."security/modifyAccount.php",
+                "data" => [
+                    "user" => $userManager->getUserByEmail($session->getUser()),
+                    "session" => $session
+                ]
+            ];
+        }
+
+        public function modifyAccountSubmit()
+        {
+            $session = new Session;
+            $userManager = new UserManager;
+
+            return [
+                "view" => VIEW_DIR."security/modifyAccount.php",
+                "data" => [
+                    "user" => $userManager->getUserByEmail($session->getUser()),
+                    "session" => $session
+                ]
+            ];
         }
 
     }
