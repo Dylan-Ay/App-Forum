@@ -2,6 +2,8 @@
 
 $users = $result['data']['users'];
 $session = $result['data']['session'];
+$message = $result['data']['message'];
+
 $title = "Listes des utilisateurs";
 ?>
 
@@ -15,7 +17,7 @@ $title = "Listes des utilisateurs";
             <th scope="col">Pseudo</th>
             <th scope="col">Role</th>
             <th scope="col">Nombre de messages</th>
-            <th scope="col">Date d'enregistrement</th>
+            <th scope="col">Date de création de compte</th>
             <th scope="col">Dernier Message</th>
             </tr>
         </thead>
@@ -44,7 +46,12 @@ $title = "Listes des utilisateurs";
                     </td>
 
                     <td>
-                        En cours.. lastinsertid
+                        <a class="me-2" href="index.php?ctrl=forum&action=detailTopic&id=<?= $message->getLastMessageByUser($user->getId())->getTopic()->getId() ?>">
+
+                            <?=$message->getLastMessageByUser($user->getId())?>
+                        </a>
+                        
+                        <span> dans la catégorie <?= $message->getLastMessageByUser($user->getId())->getTopic()->getCategory()->getTitle()?></span>
                     </td>
                 </tr>
             </tbody>

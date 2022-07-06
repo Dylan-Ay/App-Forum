@@ -17,7 +17,7 @@
         
         }
         
-        // Categories List method
+        // Method to display the list of categories
         public function listCategories()
         {
             $categoryManager = new CategoryManager();
@@ -32,7 +32,7 @@
             ];
         }
 
-        // Topics list method
+        // Method to display the list of topics
         public function listTopics($id)
         {
             $topicManager = new TopicManager();
@@ -46,12 +46,13 @@
                     "topics" => $topicManager->findTopicsByCategory($id),
                     "category" => $categoryManager->findOneById($id),
                     "messages" => $messageManager->findAll(),
+                    "message" => $messageManager,
                     "session" => $session
                 ]
             ];
         }
 
-        // Detail topic method
+        // Method to display the detail of topic
         public function detailTopic($id)
         {
             $topicManager = new TopicManager();
@@ -68,7 +69,7 @@
             ];
         }
         
-        // Add Topic method
+        // Method to add a topic
         public function addTopic($id)
         {
             $topicManager = new TopicManager();
@@ -79,7 +80,8 @@
             if ($_SERVER['REQUEST_METHOD'] === "POST"){
 
                 if (!empty($_POST['title']) && (!empty($_POST['message']))){
-
+                    // If the user is logged we filter the inputs and we execute de add method
+                    //We get the $topicId from the add method to get the lastInsertId topic in order to add the message to the right topic
                     if($session->getUser()){
 
                         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -96,26 +98,39 @@
                             'user_id' => $userManager->getUserByEmail($_SESSION['user'])->getId(),
                             'topic_id' => $topicId
                         ]);
+                        $session->addFlash('success-new-topic',
+                            '<div class="alert alert-success text-center" role="alert">
+                                Le sujet <strong>"'.$title.'"</strong> a bien été crée et votre message a bien été posté !
+                            </div>' );
 
                         $this->redirectTo("forum", "detailTopic", $topicId);
 
-                        return [
-                            "view" => VIEW_DIR."forum/detailTopic.php",
-                            "data" => [
-                                "topic" => $topicManager->findOneById($id),
-                                "messages" => $messageManager->findMessagesByTopic($id),
-                                "session" => $session
-                            ]
-                        ];
+                    }else{
+                        $session->addFlash('error-new-topic',
+                            '<div class="alert alert-danger text-center" role="alert">
+                                Erreur : Pour insérer un message vous devez être connecté.
+                            </div>' );
+    
+                        $this->redirectTo("forum", "listTopics", $id);
                     }
+
+                }else{
+                    $session->addFlash('error-new-topic',
+                        '<div class="alert alert-danger text-center" role="alert">
+                            Erreur : Veuillez remplir les deux champs.
+                        </div>' );
+
+                    $this->redirectTo("forum", "listTopics", $id);
                 }
+
+            }else{
+                $this->redirectTo("forum", "listTopics", $id);
             }
         }
 
-        // Fonction pour traiter l'ajout d'un message
+        // Method to treat the add message form
         public function addMessage($id)
         {
-            $topicManager = new TopicManager();
             $messageManager = new MessageManager();
             $userManager = new UserManager();
             $session = new Session();
@@ -134,18 +149,31 @@
                             "topic_id" => $id
                         ]);
 
+                        $session->addFlash('success-topic-message',
+                            '<div class="alert alert-success text-center" role="alert">
+                                Votre message a bien été posté !
+                            </div>' );
                         $this->redirectTo("forum", "detailTopic", $id);
 
-                        return [
-                            "view" => VIEW_DIR."forum/detailTopic.php",
-                            "data" => [
-                                "topic" => $topicManager->findOneById($id),
-                                "messages" => $messageManager->findMessagesByTopic($id),
-                                "session" => $session
-                            ]
-                        ];
+                    }else{
+                        $session->addFlash('error-topic-message',
+                            '<div class="alert alert-danger text-center" role="alert">
+                                Erreur : Pour insérer un message vous devez être connecté.
+                            </div>' );
+    
+                        $this->redirectTo("forum", "detailTopic", $id);
                     }
+                }else{
+                    $session->addFlash('error-topic-message',
+                        '<div class="alert alert-danger text-center" role="alert">
+                            Erreur : Veuillez insérez un message.
+                        </div>' );
+
+                    $this->redirectTo("forum", "detailTopic", $id);
                 }
+
+            }else{
+                $this->redirectTo("forum", "detailTopic", $id);
             }
         }
     }

@@ -11,6 +11,7 @@
     
     class HomeController extends AbstractController implements ControllerInterface{
 
+        // Method to display the index of home.php
         public function index(){
             $session = new Session;
 
@@ -22,7 +23,7 @@
                 ];
             }
             
-   
+        
         public function users(){
             $this->restrictTo("ROLE_USER");
 

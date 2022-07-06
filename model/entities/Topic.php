@@ -8,6 +8,7 @@
         private $id;
         private $title;
         private $user;
+        private $category;
         private $creationdate;
         private $closed;
         private $nb;
@@ -123,6 +124,26 @@
         public function setNb($nb)
         {
                 $this->nb = $nb;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of category
+         */ 
+        public function getCategory()
+        {
+                return $this->category;
+        }
+
+        /**
+         * Set the value of category
+         *
+         * @return  self
+         */ 
+        public function setCategory($category)
+        {
+                $this->category = $category;
 
                 return $this;
         }

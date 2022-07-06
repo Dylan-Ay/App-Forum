@@ -23,7 +23,6 @@ body{
     cursor: not-allowed;
 }
 
-
 /* <---------- HEADER ----------> */
 @media screen and (min-width: 991.5px) {
     .navbar-nav{

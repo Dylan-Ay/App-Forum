@@ -13,7 +13,8 @@
         public function __construct(){
             parent::connect();
         }
-        
+
+        // Method to find messages by topic id for ForumController.php & detailTopic.php
         public function findMessagesByTopic($id){
 
             $sql = 
@@ -30,6 +31,7 @@
             );
         }
 
+        // Method to find messages by email for SecurityController.php & detailAccount.php
         public function findMessagesByEmail($email)
         {
             $sql = 
@@ -46,6 +48,38 @@
 
             return $this->getMultipleResults(
                 DAO::select($sql, ['email' => $email]), 
+                $this->className
+            );
+        }
+
+        // Method to get the last message posted by the user_id for listUsers.php
+        public function getLastMessageByUser($id)
+        {
+            $sql = 
+            "SELECT m.content, topic_id,
+            FROM message m 
+            WHERE m.user_id = :id
+            ORDER BY m.id_message DESC LIMIT 1";
+
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['id' => $id], false), 
+                $this->className
+            );
+        }
+
+        // Method to get the last message by topic_id for listTopics.php
+        public function getLastMessageByTopic($id){
+        
+            $sql = 
+            "SELECT m.content, user_id 
+            FROM message m
+            INNER JOIN user u
+            ON u.id_user = m.user_id
+            WHERE m.topic_id = :id
+            ORDER BY m.id_message DESC LIMIT 1";
+
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['id' => $id], false), 
                 $this->className
             );
         }

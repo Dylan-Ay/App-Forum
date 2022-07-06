@@ -5,6 +5,7 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
+    use Model\Managers\MessageManager;
     use Model\Managers\UserManager;
 
     class UserController extends AbstractController implements ControllerInterface{
@@ -13,22 +14,24 @@
 
         }
 
-        // Get users list method
+        // Method to get the users list for listUsers.php
         public function listUsers()
         {
             $userManager = new UserManager();
+            $messageManager = new MessageManager();
             $session = new Session();
 
             return [
                 "view" => VIEW_DIR."user/listUsers.php",
                 "data" => [
                     "users" => $userManager->getUsersList(),
+                    "message" => $messageManager,
                     "session" => $session
                 ]
             ];
         }
 
-        // Get user detail method
+        // Method to get the detail user by id for detailUser.php
         public function detailUser($id)
         {
             $userManager = new UserManager();

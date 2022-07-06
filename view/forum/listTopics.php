@@ -3,9 +3,12 @@
     $category = $result['data']['category'];
     $messages = $result['data']['messages'];
     $session = $result['data']['session'];
-
-    $h1 = $category->getTitle();
+    $message = $result['data']['message'];
+    
     $title = "Liste des sujets de la catégorie ". $category->getTitle();
+    $h1 = $category->getTitle();
+
+    echo $session->getFlash('error-new-topic');
 ?>
 
 <section id="detail-topic" class="pb-5 pt-3 px-3">
@@ -27,7 +30,11 @@
                     </td>
 
                     <td> 
+                        <a href="index.php?ctrl=user&action=detailUser&id=<?= $topic->getUser()->getId() ?>"> 
+                        
                         <?= $topic->getUser()->getNickname();?>
+                        </a>
+                       
                     </td>
 
                     <td>
@@ -38,7 +45,13 @@
                         <?= $topic->getCreationDate(); ?>
                     </td>
                     <td> 
-                        En cours..
+                        "<?=$message->getLastMessageByTopic($topic->getId())?>" par
+                        
+                        <a href="index.php?ctrl=user&action=detailUser&id=<?= $message->getLastMessageByTopic($topic->getId())->getUser()->getId() ?>">
+
+                            <?= $message->getLastMessageByTopic($topic->getId())->getUser()->getNickname() ?>
+                        </a>                        
+                        
                     </td>
                 </tr>
             </tbody>

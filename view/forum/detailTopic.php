@@ -5,7 +5,10 @@
 
     $title = $topic->getTitle();
     $h1 = "Sujet : ". $topic->getTitle(); 
-    
+
+    echo $session->getFlash('success-new-topic');
+    echo $session->getFlash('error-topic-message');
+    echo $session->getFlash('success-topic-message');
 ?>
 
 <section class="pb-5 pt-3 px-3">

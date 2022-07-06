@@ -14,7 +14,7 @@
             parent::connect();
         }
 
-        // Fonction pour récupérer les topics selon la catégorie, elle sert également à afficher le nombre de message par sujet avec nb et getNb() dans Topic.php
+        // Method to get the topics by category, we also get the number of messages by topic with nb and getNb()
         public function findTopicsByCategory($id){
 
             $sql = 

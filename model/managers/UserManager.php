@@ -14,6 +14,7 @@
             parent::connect();
         }
 
+        // Method to get the users list
         public function getUsersList()
         {
             $sql = 
@@ -29,6 +30,7 @@
             );
         }
 
+        // Method to get the user by id
         public function getUser($id)
         {
             $sql = 
@@ -45,6 +47,7 @@
             );
         }
 
+        // Method to check if a nickname is already used, for SecurityController.php method register()
         public function findOneByNickname($nickname)
         {
             $sql = 
@@ -58,6 +61,7 @@
             );
         }
 
+        // Method to get the user by email
         public function getUserByEmail($email)
         {
             $sql = 
@@ -73,6 +77,7 @@
             );
         }
 
+        // Method to get the user by email and then to check if the password in the input matches to the password in db linked to the email input, for submitLogin()
         public function getUserByEmailCheckPassword($email)
         {
             $sql = 
@@ -86,5 +91,21 @@
                 DAO::select($sql, ['email' => $email], false), 
                 $this->className
             );
+        }
+
+        // Method to update the password by email, it allows to update the password from the input thanks to the $email in session, for modifyPasswordSubmit()
+        public function updatePasswordByEmail($password, $email)
+        {
+            $sql =
+            "UPDATE user
+            SET password = :password
+            WHERE email = :email
+            ";
+
+            return $this->getMultipleResults(
+                DAO::update($sql, ['password' => $password,'email' => $email]), 
+                $this->className
+            );
+
         }
     }

@@ -239,6 +239,7 @@
                 ];
         }
 
+        // Method to display the modify password page
         public function modifyPassword()
         {
             $session = new Session;
@@ -253,6 +254,7 @@
             ];
         }
 
+        // Method to treats the modifyPassword form
         public function modifyPasswordSubmit()
         {
             $session = new Session;
@@ -261,13 +263,22 @@
             if ($_SERVER['REQUEST_METHOD'] === "POST"){
 
                 if (!empty($_POST['password']) && !empty($_POST['confirm-password'])){
-
+                    // If both password's inputs match together
                     if ($_POST['password'] === $_POST['confirm-password']){
                         
                         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+                        // If the password is well filtered and the length is more or egual to 8 we hash the password and we execute the update
                         if ($password && strlen($password) >= 8){
-                            
+
+                            $hash = password_hash($password, PASSWORD_DEFAULT);
+
+                            $userManager->updatePasswordByEmail($hash, $session->getUser());
+
+                            $session->addFlash('password-message',
+                                '<div class="alert alert-success text-center" role="alert">
+                                        Le mot de passe a été mis à jour.
+                                </div>' );
+
                         }else{
                             
                             $session->addFlash('password-message',
@@ -298,6 +309,7 @@
             ];
         }
 
+        //Method to display the modifyAccount page
         public function modifyAccount()
         {
             $session = new Session;
@@ -312,6 +324,7 @@
             ];
         }
 
+        //Method to treat the modifyAccount form
         public function modifyAccountSubmit()
         {
             $session = new Session;
