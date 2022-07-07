@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 30 juin 2022 à 13:59
+-- Généré le : jeu. 07 juil. 2022 à 15:37
 -- Version du serveur : 5.7.36
 -- Version de PHP : 7.4.26
 
@@ -32,16 +32,18 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id_category` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(128) DEFAULT NULL,
   `creationdate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `img` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `category`
 --
 
-INSERT INTO `category` (`id_category`, `title`, `creationdate`) VALUES
-(1, 'Sport', '2022-06-27 11:58:18'),
-(2, 'Informatique', '2022-06-27 11:58:28');
+INSERT INTO `category` (`id_category`, `title`, `creationdate`, `img`) VALUES
+(1, 'Sport', '2022-06-27 11:58:18', 'public/images/categories/sport.jpg'),
+(2, 'Informatique', '2022-06-27 11:58:28', 'public/images/categories/informatique.jpg'),
+(3, 'Cuisine', '2022-07-07 16:45:08', 'public/images/categories/test.jpg');
 
 -- --------------------------------------------------------
 
@@ -59,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   PRIMARY KEY (`id_message`),
   KEY `topic_id` (`topic_id`),
   KEY `message_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `message`
@@ -70,7 +72,13 @@ INSERT INTO `message` (`id_message`, `content`, `creationdate`, `user_id`, `topi
 (2, 'Premier message catégorie athlétisme', '2022-06-27 14:31:42', 1, 2),
 (3, 'Premier message catégorie Tennis', '2022-06-27 14:32:27', 1, 3),
 (7, 'Deuxième message topic Football', '2022-06-27 14:45:29', 2, 1),
-(14, 'Premier message du basket-ball', '2022-06-29 09:54:02', 1, 15);
+(26, 'Test du PHP orienté objet', '2022-07-06 12:31:35', 4, 33),
+(27, 'Test du Javascript', '2022-07-06 12:40:35', 4, 34),
+(30, 'Deuxi&egrave;me message cat&eacute;gorie Tennis', '2022-07-06 16:18:25', 4, 3),
+(35, 'Test du HTML', '2022-07-06 16:28:49', 4, 38),
+(36, 'Test du CSS', '2022-07-06 16:29:24', 4, 39),
+(38, 'Deuxi&egrave;me message CSS', '2022-07-06 16:38:03', 4, 39),
+(39, 'Premier message sujet Basket-Ball', '2022-07-07 15:31:59', 4, 41);
 
 -- --------------------------------------------------------
 
@@ -89,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `topic` (
   PRIMARY KEY (`id_topic`),
   KEY `user_id` (`user_id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `topic`
@@ -99,10 +107,11 @@ INSERT INTO `topic` (`id_topic`, `title`, `user_id`, `category_id`, `creationdat
 (1, 'Le Football', 1, 1, '2022-06-27 11:42:39', 0),
 (2, 'l\'Athlétisme', 1, 1, '2022-06-27 11:43:10', 0),
 (3, 'Le Tennis', 1, 1, '2022-06-27 11:43:52', 0),
-(15, 'Le Basket-Ball', 1, 1, '2022-06-29 09:54:02', 0),
-(16, 'Test', 1, 1, '2022-06-29 09:57:02', 0),
-(17, 'Test', 1, 1, '2022-06-29 09:58:37', 0),
-(18, 'Je test', 1, 1, '2022-06-29 09:59:01', 0);
+(33, 'Le PHP', 4, 2, '2022-07-06 12:31:35', 0),
+(34, 'Le JavaScript', 4, 2, '2022-07-06 12:40:35', 0),
+(38, 'L&#39;HTML', 4, 2, '2022-07-06 16:28:49', 0),
+(39, 'Le CSS', 4, 2, '2022-07-06 16:29:24', 0),
+(41, 'Le Basket-Ball', 4, 1, '2022-07-07 15:31:59', 0);
 
 -- --------------------------------------------------------
 
@@ -124,16 +133,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `gender` varchar(64) DEFAULT NULL,
   `country` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id_user`, `nickname`, `email`, `password`, `role`, `registerdate`, `state`, `picture`, `birthdate`, `gender`, `country`) VALUES
-(1, 'Pseudo-1', 'pseudo-1@mail.com', 'password', 'Membre', '2022-06-17 09:37:25', 1, 'public/images/default.webp', '1990-04-03', 'Homme', 'France'),
-(2, 'Pseudo-2', 'pseudo-2@mail.com', 'password', 'Membre', '2022-06-27 14:29:28', 1, 'public/images/default.webp', '2000-06-01', 'Femme', 'France'),
-(3, 'test', 'test@test.fr', '$2y$10$3tqLWmr4ERgG8aIbC9SVeeWZUWZitP0wjkbE18kfYsNTxrC4hNFzK', 'Membre', '2022-06-30 15:31:09', 1, 'public/images/default.webp', '2022-06-16', 'Homme', 'France');
+(1, 'Pseudo-1', 'pseudo-1@mail.com', 'test1', 'ROLE_MEMBRE', '2022-06-17 09:37:25', 1, 'public/images/default.webp', '1990-04-03', 'Homme', 'France'),
+(2, 'Pseudo-2', 'pseudo-2@mail.com', 'password', 'ROLE_MEMBRE', '2022-06-27 14:29:28', 1, 'public/images/default.webp', '2000-06-01', 'Femme', 'France'),
+(4, 'Dylan68', 'test@test.fr', '$2y$10$whfYUpWc/2T3T29gZizQ9e00OH4VJ7PkKMxIr8iZI1wUa2Uei9owO', 'ROLE_ADMIN', '2022-07-01 19:37:54', 1, 'public/images/default.webp', '1995-03-31', 'Homme', 'France');
 
 --
 -- Contraintes pour les tables déchargées
@@ -143,14 +152,14 @@ INSERT INTO `user` (`id_user`, `nickname`, `email`, `password`, `role`, `registe
 -- Contraintes pour la table `message`
 --
 ALTER TABLE `message`
-  ADD CONSTRAINT `topic_id` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`),
+  ADD CONSTRAINT `topic_id` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_message_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`);
 
 --
 -- Contraintes pour la table `topic`
 --
 ALTER TABLE `topic`
-  ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`),
+  ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`) ON UPDATE CASCADE,
   ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`);
 COMMIT;
 

@@ -14,15 +14,16 @@
         // Method to display the index of home.php
         public function index(){
             $session = new Session;
-
+            $topicManager = new TopicManager;
                 return [
                     "view" => VIEW_DIR."home.php",
                     "data" =>[
-                        "session" => $session
+                        "session" => $session,
+                        "topics" => $topicManager->findLastFiveTopics()
                     ]
                 ];
             }
-            
+
         
         public function users(){
             $this->restrictTo("ROLE_USER");

@@ -23,6 +23,21 @@ body{
     cursor: not-allowed;
 }
 
+a{
+    text-decoration: none;
+    color: #111;
+    font-weight: 600;
+}
+.return{
+    transition: 0.25s;
+}
+.return:hover{
+    box-shadow: 0 0.5em 0.5em -0.4em #c67f45;
+    transform: translateY(-0.25em);
+    border-color: #c67f45;
+    color:white;
+}
+
 /* <---------- HEADER ----------> */
 @media screen and (min-width: 991.5px) {
     .navbar-nav{
@@ -31,6 +46,23 @@ body{
 }
 
 /* <---------- MAIN  ----------> */
+
+
+/* HOME */
+#last-topics{
+    background-color: white;
+    max-width: 400px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#last-topics ul{
+    margin-left: 10px;
+}
+
+#last-topics li{
+    line-height: 30px;
+}
 
 /* Message */
 #detail-message{
@@ -110,3 +142,24 @@ body{
     line-height: 30px;
 }
 
+/* Detail topic */
+#detail-topic .return{
+    width: 367px;
+    max-width: 100%;
+}
+
+.info-msg a{
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+/* Categories */
+
+#categories-list a:hover{
+    color: #ff5d2b;
+    transition: ease-in-out 240ms;
+}
+
+#categories-list h5{
+    text-align: center;
+    padding-top: 10px;
+}

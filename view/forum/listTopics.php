@@ -20,6 +20,7 @@
             <th scope="col">Nombre de messages</th>
             <th scope="col">Date de création</th>
             <th scope="col">Dernier Message</th>
+            <th scope="col"></th>
             </tr>
         </thead>
         <?php if (!empty($topics)): foreach($topics as $topic): ?>
@@ -52,6 +53,12 @@
                             <?= $message->getLastMessageByTopic($topic->getId())->getUser()->getNickname() ?>
                         </a>                        
                         
+                    </td>
+
+                    <td>
+                        <a class="text-dark" href="index.php?ctrl=forum&action=deleteTopic&id=<?=$topic->getId()?>">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
             </tbody>

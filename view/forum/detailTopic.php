@@ -11,7 +11,7 @@
     echo $session->getFlash('success-topic-message');
 ?>
 
-<section class="pb-5 pt-3 px-3">
+<section id="detail-topic" class="pb-5 pt-3 px-3">
     <?php if (!empty($messages)): foreach ($messages as $message): ?>
 
     <article id="detail-message" class="p-3 mb-5">
@@ -50,4 +50,6 @@
             </div>
         </form>
     <?php endif;?>
+
+    <a class="btn btn-dark mt-5 d-block m-auto return" href="index.php?ctrl=forum&action=listTopics&id=<?=$topic->getCategory()->getId() ?>">Revenir à la liste des sujets de la catégorie <?= $topic->getCategory()->getTitle() ?></a>
 </section>

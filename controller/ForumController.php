@@ -51,6 +51,17 @@
                 ]
             ];
         }
+        // Method to delete a topic
+        public function deleteTopic($id)
+        {
+            $topicManager = new TopicManager();
+            
+            $referer = $_SERVER['HTTP_REFERER'];
+
+            $topicManager->delete($id);
+
+            header("Location: $referer");
+        }
 
         // Method to display the detail of topic
         public function detailTopic($id)
@@ -68,6 +79,7 @@
                 ]
             ];
         }
+
         
         // Method to add a topic
         public function addTopic($id)

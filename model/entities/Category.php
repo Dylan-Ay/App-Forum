@@ -8,6 +8,7 @@
         private $id;
         private $title;
         private $creationdate;
+        private $img;
 
         public function __construct($data){         
             $this->hydrate($data);        
@@ -60,6 +61,26 @@
 
         public function setCreationdate($date){
             $this->creationdate = new \DateTime($date);
+            return $this;
+        }
+
+        /**
+         * Get the value of img
+         */ 
+        public function getImg()
+        {
+            return $this->img;
+        }
+
+        /**
+         * Set the value of img
+         *
+         * @return  self
+         */ 
+        public function setImg($img)
+        {
+            $this->img = $img;
+
             return $this;
         }
     }

@@ -56,7 +56,7 @@
         public function getLastMessageByUser($id)
         {
             $sql = 
-            "SELECT m.content, topic_id,
+            "SELECT m.content, topic_id
             FROM message m 
             WHERE m.user_id = :id
             ORDER BY m.id_message DESC LIMIT 1";

@@ -30,4 +30,17 @@
                 $this->className
             );
         }
+
+        public function findLastFiveTopics(){
+            $sql=
+            "SELECT *
+            FROM topic
+            ORDER BY creationdate DESC LIMIT 5";
+
+            return $this->getMultipleResults(
+                DAO::select($sql), 
+                $this->className
+            );
+
+        }
     }
