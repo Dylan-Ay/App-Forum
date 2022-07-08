@@ -20,7 +20,7 @@
             <input type="text" name="country" id="country" value=" <?= $user->getCountry() ?>">
 
             <label for="birthdate">Date de naissance:</label>
-            <input type="date" name="birthdate" id="birthdate" value=" <?= $user->getBirthdate()->format('d/m/y') ?>">
+            <input type="date" name="birthdate" id="birthdate" value="<?= $user->getBirthdate()->format('d/m/Y') ?>">
 
             <input type="submit" value="Valider" class="mt-3 btn btn-outline-dark align-self-center">
 

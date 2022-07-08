@@ -5,9 +5,8 @@ $session = $result['data']['session'];
 $message = $result['data']['message'];
 
 $title = "Listes des utilisateurs";
+$h1 = "Listes des utilisateurs";
 ?>
-
-<h1>Liste des Utilisateurs</h1>
 
 <section id="list-users" class="pb-5 pt-3 px-3">
     <table class="table">
@@ -34,7 +33,7 @@ $title = "Listes des utilisateurs";
                     </td>
 
                     <td>
-                        <?= $user->getRole(); ?>
+                        <?php if($user->getRoles()[0] === 'ROLE_USER'): echo "Utilisateur"; else: echo "Admin"; endif;?>
                     </td>
 
                     <td>
@@ -44,14 +43,18 @@ $title = "Listes des utilisateurs";
                     <td>
                         <?= $user->getRegisterDate()->format("d/m/Y à H:i:s"); ?>
                     </td>
-
+                
                     <td>
-                        <a class="me-2" href="index.php?ctrl=forum&action=detailTopic&id=<?= $message->getLastMessageByUser($user->getId())->getTopic()->getId() ?>">
-
-                            <?=$message->getLastMessageByUser($user->getId())?>
-                        </a>
                         
-                        <span> dans la catégorie <?= $message->getLastMessageByUser($user->getId())->getTopic()->getCategory()->getTitle()?></span>
+                        <?php if((!empty($message->getLastMessageByUser($user->getId())))):?>
+
+                            <a class="me-2" href="index.php?ctrl=forum&action=detailTopic&id=<?= $message->getLastMessageByUser($user->getId())->getTopic()->getId() ?>">
+
+                                <?=$message->getLastMessageByUser($user->getId())?>
+                            </a>
+                            
+                            <span> dans la catégorie <?= $message->getLastMessageByUser($user->getId())->getTopic()->getCategory()->getTitle()?></span>
+                        <?php else: echo "Aucun message n'a été posté"; endif;?>
                     </td>
                 </tr>
             </tbody>

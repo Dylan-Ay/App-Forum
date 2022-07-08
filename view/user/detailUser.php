@@ -8,12 +8,12 @@ $title = "Profil de ". $user->getNickname();
 
 <section class="pb-5 pt-3 px-3">
 
-    <div class="title-user d-flex align-items-center mb-5">
+    <div class="title-user d-flex align-items-center mb-5 justify-content-center">
         <img src="<?= $user->getPicture();?>" alt="Photo de profil de l'utilisateur <?= $user->getNickname();?> ">
         <h1 class="ps-4">Profil de <?= $user->getNickname(); ?></h1>
     </div>
     
-    <div class="infos-user">
+    <div class="infos-user m-auto">
         <h4 class="pb-2">Infos</h4>
         <ul>
             <li>

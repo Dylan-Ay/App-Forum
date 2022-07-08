@@ -1,17 +1,17 @@
 <?php
+    $user = $result['data']['user'];
+    if (!empty($result['data']['messages'])): $messages = $result['data']['messages']; endif;
+    $session = $result['data']['session'];
 
-$user = $result['data']['user'];
-if (!empty($result['data']['messages'])): $messages = $result['data']['messages']; endif;
-$session = $result['data']['session'];
+    $title = "Profil de ". $user->getNickname();
 
-$title = "Profil de ". $user->getNickname();
-
-if ($session->getUser()){
-    $h1 = "Bienvenue sur votre compte ". $user->getNickname();
-}else{
-    header('Location: index.php?ctrl=security&action=login');
-};
+    if ($session->getUser()){
+        $h1 = "Bienvenue sur votre compte ". $user->getNickname();
+    }else{
+        header('Location: index.php?ctrl=security&action=login');
+    };
 ?>
+
 <section id="user-details" class="py-3 px-3 mb-5">
     <div class="header-user-details d-flex justify-content-between align-items-center">
         <h4>Informations détaillées</h4>
@@ -46,7 +46,7 @@ if ($session->getUser()){
             <span class="almost-bold user-data">Pays: </span> <?= $user->getCountry() ?>
         </li>
         <li> 
-            <span class="almost-bold user-data">Role:</span> <?= $user->getRole() ?> 
+            <span class="almost-bold user-data">Role:</span> <?php if($user->getRoles()[0] === 'ROLE_USER'): echo "Utilisateur"; else: echo "Admin"; endif;?> 
         </li>
         <li> 
             <span class="almost-bold user-data">Date de création de compte:</span> <?= $user->getRegisterDate()->format("d/m/Y à H:i:s") ?> 

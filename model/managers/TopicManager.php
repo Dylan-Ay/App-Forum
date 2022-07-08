@@ -31,6 +31,7 @@
             );
         }
 
+        // Method to find the last five topics for the home
         public function findLastFiveTopics(){
             $sql=
             "SELECT *
@@ -42,5 +43,19 @@
                 $this->className
             );
 
+        }
+
+        //Method to get the topic by id
+        public function getTopicTitleById($id)
+        {
+            $sql =
+            "SELECT *
+            FROM topic
+            WHERE id_topic = :id";
+
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['id' => $id], false), 
+                $this->className
+            );
         }
     }

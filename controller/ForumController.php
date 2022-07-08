@@ -55,11 +55,19 @@
         public function deleteTopic($id)
         {
             $topicManager = new TopicManager();
+            $session = new Session();
             
             $referer = $_SERVER['HTTP_REFERER'];
 
+            $topicTitle = $topicManager->getTopicTitleById($id)->getTitle();
+
             $topicManager->delete($id);
 
+            $session->addFlash('message-topic',
+                '<div class="alert alert-success text-center" role="alert">
+                Le sujet <strong>"'.$topicTitle.'"</strong> a bien été supprimé.
+            </div>');
+            
             header("Location: $referer");
         }
 
@@ -118,7 +126,7 @@
                         $this->redirectTo("forum", "detailTopic", $topicId);
 
                     }else{
-                        $session->addFlash('error-new-topic',
+                        $session->addFlash('message-topic',
                             '<div class="alert alert-danger text-center" role="alert">
                                 Erreur : Pour insérer un message vous devez être connecté.
                             </div>' );
@@ -127,7 +135,7 @@
                     }
 
                 }else{
-                    $session->addFlash('error-new-topic',
+                    $session->addFlash('message-topic',
                         '<div class="alert alert-danger text-center" role="alert">
                             Erreur : Veuillez remplir les deux champs.
                         </div>' );

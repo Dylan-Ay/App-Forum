@@ -6,7 +6,7 @@
 
     class CategoryManager extends Manager{
 
-        protected $className = "Model\Entities\Topic";
+        protected $className = "Model\Entities\Category";
         protected $tableName = "category";
 
 

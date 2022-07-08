@@ -51,5 +51,5 @@
         </form>
     <?php endif;?>
 
-    <a class="btn btn-dark mt-5 d-block m-auto return" href="index.php?ctrl=forum&action=listTopics&id=<?=$topic->getCategory()->getId() ?>">Revenir à la liste des sujets de la catégorie <?= $topic->getCategory()->getTitle() ?></a>
+    <a class="btn btn-dark mt-5 d-block m-auto btn-return" href="index.php?ctrl=forum&action=listTopics&id=<?=$topic->getCategory()->getId() ?>">Revenir à la liste des sujets de la catégorie <?= $topic->getCategory()->getTitle() ?></a>
 </section>

@@ -8,19 +8,19 @@
     $title = "Liste des sujets de la catégorie ". $category->getTitle();
     $h1 = $category->getTitle();
 
-    echo $session->getFlash('error-new-topic');
+    echo $session->getFlash('message-topic');
 ?>
 
 <section id="detail-topic" class="pb-5 pt-3 px-3">
     <table class="table mb-5">
         <thead>
             <tr>
-            <th scope="col">Sujet</th>
-            <th scope="col">Auteur</th>
-            <th scope="col">Nombre de messages</th>
-            <th scope="col">Date de création</th>
-            <th scope="col">Dernier Message</th>
-            <th scope="col"></th>
+                <th scope="col">Sujet</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Nombre de messages</th>
+                <th scope="col">Date de création</th>
+                <th scope="col">Dernier Message</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <?php if (!empty($topics)): foreach($topics as $topic): ?>
@@ -56,13 +56,15 @@
                     </td>
 
                     <td>
-                        <a class="text-dark" href="index.php?ctrl=forum&action=deleteTopic&id=<?=$topic->getId()?>">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
+                        <?php if($session->isAdmin()):?>
+                            <a class="text-dark" href="index.php?ctrl=forum&action=deleteTopic&id=<?=$topic->getId()?>">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        <?php endif;?>
                     </td>
                 </tr>
             </tbody>
-        <?php endforeach; endif;?>
+        <?php endforeach; else: echo "<p class='text-center mb-5 pb-5'>Aucun sujet n'a été crée pour le moment.</p>"; endif;?>
     </table>
     <?php if ($session->getUser()): ?>
         <span class="answer mb-3 d-block almost-bold">Nouveau Sujet</span>
@@ -84,5 +86,7 @@
             </div>
         </form>
     <?php ;endif;?>
+
+    <a class="btn btn-dark mt-5 d-block m-auto btn-return" href="index.php?ctrl=forum&action=listCategories">Revenir à la liste des catégories</a>
 </section>
 

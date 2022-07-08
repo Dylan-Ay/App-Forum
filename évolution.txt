@@ -9,11 +9,8 @@
         </figure>
     </div>
 
-    Ajout bouton retour à la liste des catégories,
     Modification des informations utilisateurs,
     Modal supression,
-    Message de succès lors de la supression,
-    Affichage des possibilités suivant si le user possède le role admin
-    Date de naissance en value?
-    Récupérer la propriété img de category?
     Modification du design des listes ?
+    Davantage de restrictions mdp
+    Upload image avatar user

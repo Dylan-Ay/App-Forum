@@ -60,27 +60,27 @@
 
                     $userManager = new UserManager();
                     $userNickname = $userManager->findOneByNickname($nickname);
-                    $userMail = $userManager->getUserByEmail($email);
-
+                    $userMail = $userManager->checkIfEmailExists($email);
+                    
                     // If the nickname or the email doesn't exist in db, we hash the password and we create the user
 
                     if (!$userNickname){
                         if (!$userMail){
                             $hash = password_hash($password, PASSWORD_DEFAULT);
-    
-                            if($userManager->add([
+                            
+                            $userManager->add([
                                 "nickname" => $nickname,
                                 "email" => $email,
                                 "gender" => $gender,
                                 "country" => $country,
                                 "password" => $hash,
-                                "birthdate" => $birthdate
-                            ])){
+                                "birthdate" => $birthdate,
+                                "roles" => json_encode(['ROLE_USER'])
+                            ]);
                                 $session->addFlash('signup-message',
                                 '<div class="alert alert-success text-center" role="alert">
                                     Votre compte a bien été crée.
                                 </div>' );
-                            }
                         }else{
                             $session->addFlash('signup-message',
                                 '<div class="alert alert-danger text-center" role="alert">
@@ -120,11 +120,12 @@
                         ]
                     ];
                 }
+            }else{
+                $session->addFlash('signup-message',
+                        '<div class="alert alert-danger text-center" role="alert">
+                            Erreur :  Veuillez remplir correctement le formulaire.
+                        </div>' );
             }
-            $session->addFlash('signup-message',
-                    '<div class="alert alert-danger text-center" role="alert">
-                        Erreur :  Veuillez remplir correctement le formulaire.
-                    </div>' );
 
             return [
                 "view" => VIEW_DIR."security/signup.php",
@@ -157,8 +158,8 @@
             return [
                 "view" => VIEW_DIR."security/detailAccount.php",
                 "data" => [
-                    "user" => $userManager->getUserByEmail($session->getUser()),
-                    "messages" => $messageManager->findMessagesByEmail($session->getUser()),
+                    "user" => $userManager->getUserByEmail($session->getUser()->getEmail()),
+                    "messages" => $messageManager->findMessagesByEmail($session->getUser()->getEmail()),
                     "session" => $session
                 ]
             ];
@@ -179,14 +180,14 @@
                 if ($email && $password){
 
                     $userManager = new UserManager;
-                    $emailExists = $userManager->getUserByEmail($email);
+                    $emailExists = $userManager->findOneByEmail($email);
                     $passwordMatches = $userManager->getUserByEmailCheckPassword($email);
 
                     // If the email exists and the password matches to the email which both exist in the db we put in session the user email
 
                     if ($emailExists && password_verify($password, $passwordMatches->getPassword())){
                         
-                        $session->setUser($email);
+                        $session->setUser($emailExists);
 
                         return [
                             "view" => VIEW_DIR."security/detailAccount.php",
@@ -230,13 +231,7 @@
         {
             unset($_SESSION["user"]);
 
-            $session = new Session;
-                return [
-                    "view" => VIEW_DIR."home.php",
-                    "data" =>[
-                        "session" => $session
-                    ]
-                ];
+            $this->redirectTo('home','index');
         }
 
         // Method to display the modify password page

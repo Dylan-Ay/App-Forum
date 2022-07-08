@@ -18,7 +18,7 @@
         public function getUsersList()
         {
             $sql = 
-            "SELECT id_user, nickname, email, role, registerdate, state, picture, COUNT(m.id_message) as nb
+            "SELECT id_user, nickname, email, roles, registerdate, state, picture, COUNT(m.id_message) as nb
             FROM user u
             LEFT JOIN message m
             ON m.user_id = u.id_user
@@ -34,7 +34,7 @@
         public function getUser($id)
         {
             $sql = 
-            "SELECT id_user, nickname, email, role, registerdate, state, picture, COUNT(m.id_message) as nb, gender, birthdate, country
+            "SELECT id_user, nickname, email, roles, registerdate, state, picture, COUNT(m.id_message) as nb, gender, birthdate, country
             FROM user u
             LEFT JOIN message m
             ON m.user_id = u.id_user
@@ -65,10 +65,23 @@
         public function getUserByEmail($email)
         {
             $sql = 
-            "SELECT u.email, u.id_user, u.nickname, u.role, u.registerdate, u.picture, COUNT(m.id_message) as nb, u.gender, u.birthdate, u.country
+            "SELECT u.email, u.id_user, u.nickname, u.roles, u.registerdate, u.picture, COUNT(m.id_message) as nb, u.gender, u.birthdate, u.country
             FROM ".$this->tableName." u
             LEFT JOIN message m
             ON m.user_id = u.id_user
+            WHERE u.email = :email";
+
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['email' => $email], false), 
+                $this->className
+            );
+        }
+
+        public function checkIfEmailExists($email)
+        {
+            $sql = 
+            "SELECT u.email
+            FROM user u
             WHERE u.email = :email";
 
             return $this->getOneOrNullResult(
@@ -108,4 +121,19 @@
             );
 
         }
+
+        public function findOneByEmail($email){
+
+            $sql = "SELECT *
+            FROM ".$this->tableName." a
+            WHERE a.email = :email
+            ";
+
+    return $this->getOneOrNullResult(
+        DAO::select($sql, ['email' => $email], false), 
+        $this->className
+    );
+}
+
+       
     }

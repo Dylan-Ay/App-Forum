@@ -49,12 +49,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?ctrl=forum&action=listCategories">Catégories</a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php?ctrl=user&action=listUsers">Utilisateurs</a>
-                        </li>
+                        <?php if(App\Session::isAdmin()): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?ctrl=user&action=listUsers">Utilisateurs</a>
+                            </li>
+                        <?php endif;?>
                         
-                        <?php if($session->getUser()): ?>
+                        <?php if(App\Session::getUser()):?>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="index.php?ctrl=security&action=detailAccount">Mon Profil</a>
@@ -62,7 +63,7 @@
 
                         <?php endif;?>
 
-                        <?php if(!$session->getUser()): ?>
+                        <?php if(!App\Session::getUser()): ?>
 
                             <li class="nav-item">
                                 <a class='nav-link' href='index.php?ctrl=security&action=registerForm'>S'inscrire</a>
@@ -93,5 +94,6 @@
         </p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="public/js/app.js"></script>
 </body>
 </html>

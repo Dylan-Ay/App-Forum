@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 07 juil. 2022 à 15:37
+-- Généré le : ven. 08 juil. 2022 à 14:04
 -- Version du serveur : 5.7.36
 -- Version de PHP : 7.4.26
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `creationdate` datetime DEFAULT CURRENT_TIMESTAMP,
   `img` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `category`
@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS `category` (
 INSERT INTO `category` (`id_category`, `title`, `creationdate`, `img`) VALUES
 (1, 'Sport', '2022-06-27 11:58:18', 'public/images/categories/sport.jpg'),
 (2, 'Informatique', '2022-06-27 11:58:28', 'public/images/categories/informatique.jpg'),
-(3, 'Cuisine', '2022-07-07 16:45:08', 'public/images/categories/test.jpg');
+(3, 'Cuisine', '2022-07-07 16:45:08', 'public/images/categories/cuisine.jpg'),
+(4, 'Jardinage', '2022-07-08 09:40:29', 'public/images/categories/jardinage.jpg');
 
 -- --------------------------------------------------------
 
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   PRIMARY KEY (`id_message`),
   KEY `topic_id` (`topic_id`),
   KEY `message_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `message`
@@ -97,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `topic` (
   PRIMARY KEY (`id_topic`),
   KEY `user_id` (`user_id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `topic`
@@ -125,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `nickname` varchar(128) DEFAULT NULL,
   `email` varchar(128) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `role` varchar(128) DEFAULT 'Membre',
+  `roles` json DEFAULT NULL,
   `registerdate` datetime DEFAULT CURRENT_TIMESTAMP,
   `state` tinyint(1) DEFAULT '1',
   `picture` varchar(80) NOT NULL DEFAULT 'public/images/default.webp',
@@ -133,16 +134,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   `gender` varchar(64) DEFAULT NULL,
   `country` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id_user`, `nickname`, `email`, `password`, `role`, `registerdate`, `state`, `picture`, `birthdate`, `gender`, `country`) VALUES
-(1, 'Pseudo-1', 'pseudo-1@mail.com', 'test1', 'ROLE_MEMBRE', '2022-06-17 09:37:25', 1, 'public/images/default.webp', '1990-04-03', 'Homme', 'France'),
-(2, 'Pseudo-2', 'pseudo-2@mail.com', 'password', 'ROLE_MEMBRE', '2022-06-27 14:29:28', 1, 'public/images/default.webp', '2000-06-01', 'Femme', 'France'),
-(4, 'Dylan68', 'test@test.fr', '$2y$10$whfYUpWc/2T3T29gZizQ9e00OH4VJ7PkKMxIr8iZI1wUa2Uei9owO', 'ROLE_ADMIN', '2022-07-01 19:37:54', 1, 'public/images/default.webp', '1995-03-31', 'Homme', 'France');
+INSERT INTO `user` (`id_user`, `nickname`, `email`, `password`, `roles`, `registerdate`, `state`, `picture`, `birthdate`, `gender`, `country`) VALUES
+(1, 'Pseudo-1', 'pseudo-1@mail.com', 'test1', '[\"ROLE_USER\"]', '2022-06-17 09:37:25', 1, 'public/images/default.webp', '1990-04-03', 'Homme', 'France'),
+(2, 'Pseudo-2', 'pseudo-2@mail.com', 'password', '[\"ROLE_USER\"]', '2022-06-27 14:29:28', 1, 'public/images/default.webp', '2000-06-01', 'Femme', 'France'),
+(4, 'Dylan68', 'test@test.fr', '$2y$10$whfYUpWc/2T3T29gZizQ9e00OH4VJ7PkKMxIr8iZI1wUa2Uei9owO', '[\"ROLE_ADMIN\"]', '2022-07-01 19:37:54', 1, 'public/images/default.webp', '1995-03-31', 'Homme', 'France'),
+(6, 'NouveauProfil', 'nouveauprofil@gmail.com', '$2y$10$WMlbboKRGXome1t4vIEF5u.PiD3w5HZV0/E9o8uONM2FjKzBRwaFS', '[\"ROLE_USER\"]', '2022-07-08 14:37:10', 1, 'public/images/default.webp', '2022-07-05', 'Homme', 'France'),
+(10, 'azerty', 'azerty@azerty.fr', '$2y$10$.P1IAUf/1kqEiXSNBMajIu2vxBZmoMew1FoB3lixCucpatcRWvmBW', '[\"ROLE_USER\"]', '2022-07-08 15:20:54', 1, 'public/images/default.webp', '2022-07-08', 'Homme', 'France'),
+(12, 'NouveauProfillll', 'nouveauprofil@gmail.fr', '$2y$10$7W38ePl04Ait8L5svgXecOeZeMzMprzGE3Kh7p3s6qH2g.HQqGxYy', '[\"ROLE_USER\"]', '2022-07-08 15:48:31', 1, 'public/images/default.webp', '2022-07-08', 'Homme', 'France');
 
 --
 -- Contraintes pour les tables déchargées

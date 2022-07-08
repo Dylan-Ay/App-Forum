@@ -17,7 +17,7 @@
         <label for="password">Mot de passe:</label>
         <input type="password" name="password" id="password" required>
 
-        <input type="submit" value="Se connecter" class="mt-3 btn btn-outline-dark align-self-center">
+        <input type="submit" value="Se connecter" class="mt-3 btn btn-dark btn-submit-form align-self-center">
         
     </form>
     <p class="text-center mt-4">Nouvel utilisateur ? 

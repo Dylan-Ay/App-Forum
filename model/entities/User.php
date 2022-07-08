@@ -8,7 +8,7 @@
         private $id;
         private $nickname;
         private $email;
-        private $role;
+        private $roles;
         private $registerdate;
         private $state;
         private $picture;
@@ -106,13 +106,9 @@
         /**
          * Get the value of role
          */ 
-        public function getRole()
+        public function getRoles()
         {
-                if ($this->role === "ROLE_ADMIN"){
-                        return $this->role = "Admin";
-                }else{
-                        return $this->role = "Utilisateur";
-                }
+                return $this->roles;
         }
 
         /**
@@ -120,11 +116,17 @@
          *
          * @return  self
          */ 
-        public function setRole($role)
+        public function setRoles($roles)
         {
-                $this->role = $role;
+                $this->roles = json_decode($roles);
+                if(empty($this->roles)){
+                        $this->roles [] = "ROLE_USER";
+                }
+        }
 
-                return $this;
+        public function hasRole($role)
+        {
+                return in_array($role, $this->getRoles());
         }
 
         /**

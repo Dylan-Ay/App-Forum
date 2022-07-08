@@ -1,6 +1,6 @@
 <?php 
     $session = $result['data']['session'];
-    $h1 = "S'inscrire";
+    $h1 = "Inscription";
 ?>
 <?php 
     echo $session->getFlash('signup-message');
@@ -31,7 +31,7 @@
         <label for="confirm-password">Confirmer le mot de passe:</label>
         <input type="password" name="confirm-password" id="confirm-password" required>
 
-        <input type="submit" value="S'inscrire" class="mt-3 btn btn-outline-dark align-self-center">
+        <input type="submit" value="S'inscrire" class="mt-3 btn btn-dark align-self-center btn-submit-form">
 
     </form>
 </section>
