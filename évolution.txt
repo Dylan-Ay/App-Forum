@@ -9,8 +9,6 @@
         </figure>
     </div>
 
-    Modification des informations utilisateurs,
-    Modal supression,
     Modification du design des listes ?
     Davantage de restrictions mdp
     Upload image avatar user

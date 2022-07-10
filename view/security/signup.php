@@ -16,10 +16,10 @@
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" required>
 
-        <label for="gender">Genre: <small><em>facultatif</em></small></label>
+        <label for="gender">Genre:</label>
         <input type="text" name="gender" id="gender">
         
-        <label for="gender">Pays: <small><em>facultatif</em></small></label>
+        <label for="gender">Pays:</label>
         <input type="text" name="country" id="country">
 
         <label for="birthdate">Date de naissance:</label>

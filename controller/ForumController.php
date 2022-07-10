@@ -101,21 +101,22 @@
 
                 if (!empty($_POST['title']) && (!empty($_POST['message']))){
                     // If the user is logged we filter the inputs and we execute de add method
+
                     //We get the $topicId from the add method to get the lastInsertId topic in order to add the message to the right topic
                     if($session->getUser()){
 
-                        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
-                        $message = filter_input(INPUT_POST, 'message', FILTER_DEFAULT);
+                        $title = trim(filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS));
+                        $message = trim(filter_input(INPUT_POST, 'message', FILTER_DEFAULT));
                 
                         $topicId = $topicManager->add([
                             'title' => $title,
-                            'user_id' => $userManager->getUserByEmail($_SESSION['user'])->getId(),
+                            'user_id' => $userManager->getUserByEmail($session->getUser()->getEmail())->getId(),
                             'category_id' => $id
                         ]);
                                                  
                         $messageManager->add([
                             'content' => $message,
-                            'user_id' => $userManager->getUserByEmail($_SESSION['user'])->getId(),
+                            'user_id' => $userManager->getUserByEmail($session->getUser()->getEmail())->getId(),
                             'topic_id' => $topicId
                         ]);
                         $session->addFlash('success-new-topic',
@@ -161,7 +162,7 @@
 
                     if ($session->getUser()){
                         
-                        $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                        $message = trim(filter_input(INPUT_POST, 'message', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
                         
                         $messageManager->add([
                             "content" => $message,

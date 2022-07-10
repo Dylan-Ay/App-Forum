@@ -32,7 +32,7 @@
                     <div class="col d-flex align-items-end login-container">
                         <?php if($session->getUser()): ?>
                             
-                            <a class='nav-link' href='index.php?ctrl=security&action=logout'>Se deconnecter</a>
+                            <a class='nav-link' href='index.php?ctrl=security&action=logout'>Se déconnecter</a>
 
                         <?php else: ?>
 
@@ -88,11 +88,15 @@
         </main>
 
         <!------- FOOTER ------->
-    <footer class="container">
-        <p>
-            &copy; 2020 - Forum CDA - <a href="/home/forumRules.html">Règlement du forum</a> - <a href="">Mentions légales</a>
-        </p>
-    </footer>
+        <footer class="bg-light text-center text-lg-start">
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2020 Copyright:
+                <a class="text-dark" href="https://dylanayache.com/" target="_blank">Dylan Ayache</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="public/js/app.js"></script>
 </body>

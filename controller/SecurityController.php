@@ -31,19 +31,19 @@
             if (!empty($_POST['nickname'] && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirm-password']) && !empty($_POST['birthdate'])))
 
             {
-                $nickname = filter_input(INPUT_POST, "nickname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $nickname = trim(filter_input(INPUT_POST, "nickname", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-                $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+                $email = trim(filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL));
 
-                $gender = filter_input(INPUT_POST, "gender", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $gender = trim(filter_input(INPUT_POST, "gender", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-                $country = filter_input(INPUT_POST, "country", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $country = trim(filter_input(INPUT_POST, "country", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-                $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $password = trim(filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-                $confirmPassword = filter_input(INPUT_POST, "confirm-password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $confirmPassword = trim(filter_input(INPUT_POST, "confirm-password", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-                $birthdate = filter_input(INPUT_POST, "birthdate", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $birthdate = trim(filter_input(INPUT_POST, "birthdate", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             }
             else{
                 $session->addFlash('signup-message',
@@ -243,7 +243,7 @@
             return [
                 "view" => VIEW_DIR."security/modifyPassword.php",
                 "data" => [
-                    "user" => $userManager->getUserByEmail($session->getUser()),
+                    "user" => $userManager->getUserByEmail($session->getUser()->getEmail()),
                     "session" => $session
                 ]
             ];
@@ -267,7 +267,7 @@
 
                             $hash = password_hash($password, PASSWORD_DEFAULT);
 
-                            $userManager->updatePasswordByEmail($hash, $session->getUser());
+                            $userManager->updatePasswordByEmail($hash, $session->getUser()->getEmail());
 
                             $session->addFlash('password-message',
                                 '<div class="alert alert-success text-center" role="alert">
@@ -298,7 +298,7 @@
             return [
                 "view" => VIEW_DIR."security/modifyPassword.php",
                 "data" => [
-                    "user" => $userManager->getUserByEmail($session->getUser()),
+                    "user" => $userManager->getUserByEmail($session->getUser()->getEmail()),
                     "session" => $session
                 ]
             ];
@@ -313,7 +313,7 @@
             return [
                 "view" => VIEW_DIR."security/modifyAccount.php",
                 "data" => [
-                    "user" => $userManager->getUserByEmail($session->getUser()),
+                    "user" => $userManager->getUserByEmail($session->getUser()->getEmail()),
                     "session" => $session
                 ]
             ];
@@ -325,13 +325,39 @@
             $session = new Session;
             $userManager = new UserManager;
 
-            return [
-                "view" => VIEW_DIR."security/modifyAccount.php",
-                "data" => [
-                    "user" => $userManager->getUserByEmail($session->getUser()),
-                    "session" => $session
-                ]
-            ];
+            if ($_SERVER['REQUEST_METHOD'] === "POST"){
+                
+                if (!empty($_POST['nickname']) && !empty($_POST['email']) && !empty($_POST['gender']) && !empty($_POST['country']) && !empty($_POST['birthdate'])){
+
+                    $nickname = trim(filter_input(INPUT_POST, 'nickname', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+                    $email = trim(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL));
+                    $gender = trim(filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+                    $country = trim(filter_input(INPUT_POST, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+                    $birthdate = trim(filter_input(INPUT_POST, 'birthdate', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+                    if ($nickname && $email && $gender && $country && $birthdate){
+                        $userManager->updateUserInformations($nickname, $email, $birthdate, $gender, $country);
+
+                        $session->addFlash('update-info-message', 
+                        '<div class="alert alert-success text-center" role="alert">
+                            Les informations de votre profil ont bien étés mises à jour.
+                        </div>' );
+
+                    }else{
+                        $session->addFlash('update-info-message',
+                        '<div class="alert alert-danger text-center" role="alert">
+                                Erreur : Veuillez remplir correctement le formulaire.
+                        </div>' );
+                    }
+
+                }else{
+                    $session->addFlash('update-info-message',
+                        '<div class="alert alert-danger text-center" role="alert">
+                                Erreur : Veuillez remplir tous les champs.
+                        </div>' );
+                }
+            }
+            $this->redirectTo('security', 'modifyAccount');
         }
 
     }

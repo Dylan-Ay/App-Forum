@@ -3,6 +3,7 @@
     
     use App\Manager;
     use App\DAO;
+use App\Session;
 
     class UserManager extends Manager{
 
@@ -65,7 +66,7 @@
         public function getUserByEmail($email)
         {
             $sql = 
-            "SELECT u.email, u.id_user, u.nickname, u.roles, u.registerdate, u.picture, COUNT(m.id_message) as nb, u.gender, u.birthdate, u.country
+            "SELECT u.email, id_user, u.nickname, u.roles, u.registerdate, u.picture, COUNT(m.id_message) as nb, u.gender, u.birthdate, u.country
             FROM ".$this->tableName." u
             LEFT JOIN message m
             ON m.user_id = u.id_user
@@ -117,6 +118,25 @@
 
             return $this->getMultipleResults(
                 DAO::update($sql, ['password' => $password,'email' => $email]), 
+                $this->className
+            );
+
+        }
+
+        public function updateUserInformations($nickname, $email, $birthdate, $gender, $country)
+        {
+            $session = new Session;
+
+            $sql= "UPDATE user 
+            SET nickname = :nickname,
+            email = :email,
+            birthdate = :birthdate,
+            gender = :gender,
+            country =:country
+            WHERE id_user = :id_user";
+
+            return $this->getMultipleResults(
+                DAO::update($sql, ['nickname' => $nickname,'email' => $email, 'birthdate' => $birthdate, 'gender'=> $gender, 'country' => $country, 'id_user' => $session->getUser()->getId()]), 
                 $this->className
             );
 
