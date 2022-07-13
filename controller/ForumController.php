@@ -166,7 +166,7 @@
                         
                         $messageManager->add([
                             "content" => $message,
-                            "user_id" => $userManager->getUserByEmail($_SESSION['user'])->getId(),
+                            "user_id" => $userManager->getUserByEmail($session->getUser()->getEmail())->getId(),
                             "topic_id" => $id
                         ]);
 
